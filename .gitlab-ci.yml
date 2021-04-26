@@ -1,0 +1,16 @@
+image: ubuntu:bionic
+stages:
+  - build
+Conan:
+  stage: build
+  before_script:
+    - apt-get update
+    - apt-get install -y python3-pip
+    - pip3 install conan
+    - source ~/.profile
+  script:
+    - mkdir build && cd build
+    - conan profile new goodok-profile --detect
+    - conan profile update settings.compiler.version=8 goodok-profile
+    - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
+    - conan install -s build_type=Release .. --build=missing --profile goodok-profile

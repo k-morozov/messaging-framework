@@ -15,3 +15,4 @@ Conan:
     - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
     - conan install -s build_type=Release .. --build=missing --profile goodok-profile
     - cmake ..
+    - cmake --build .

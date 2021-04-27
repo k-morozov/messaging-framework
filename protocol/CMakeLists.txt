@@ -28,5 +28,5 @@ include_directories(
 target_include_directories(${PROTOCOL_LIB_NAME}
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}
-            ${CMAKE_SOURCE_DIR}
+#            ${CMAKE_SOURCE_DIR}
 )

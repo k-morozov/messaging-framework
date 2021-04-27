@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
 
 project(Messaging-framework)
 
@@ -14,21 +14,15 @@ generate_proto_files()
 set(PROTOCOL_LIB_NAME protocol_lib)
 
 add_library(${PROTOCOL_LIB_NAME} STATIC)
-file(GLOB ProtoFilesSrc "${CMAKE_BINARY_DIR}/proto/*.pb.cc")
-file(GLOB ProtoFilesHdr "${CMAKE_BINARY_DIR}/proto/*.pb.h")
-
-message(${ProtoFilesSrc})
-message(${ProtoFilesHdr})
+file(GLOB ProtoFiles "${CMAKE_BINARY_DIR}/proto/*.pb.cc" "${CMAKE_BINARY_DIR}/proto/*.pb.h")
 
 target_sources(${PROTOCOL_LIB_NAME}
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/include/protocol/protocol.h
     PRIVATE
-        ${ProtoFilesSrc}
-        ${ProtoFilesHdr}
-        "include/protocol/command_table.h"
-        "include/protocol/datetime.h" include/protocol/datetime.cpp
-        "include/protocol/msgfactory.h" include/protocol/msgfactory.cpp
+        ${ProtoFiles}
+        include/protocol/datetime.cpp
+        include/protocol/msgfactory.cpp
 )
 
 set_target_properties(${PROTOCOL_LIB_NAME} PROPERTIES
@@ -51,11 +45,11 @@ include_directories(
 target_include_directories(${PROTOCOL_LIB_NAME}
     PUBLIC
         ./include
-        ${CONAN_LIB_DIRS_PROTOBUF}
-        ${CONAN_BIN_DIRS_PROTOBUF}
+#        ${CONAN_LIB_DIRS_PROTOBUF}
+#        ${CONAN_BIN_DIRS_PROTOBUF}
     PRIVATE
-        ${CMAKE_CURRENT_BINARY_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_BINARY_DIR}/proto
+#        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 #install(TARGETS ${PROTOCOL_LIB_NAME} DESTINATION /usr/local/lib)

@@ -45,10 +45,11 @@ include_directories(
 target_include_directories(${PROTOCOL_LIB_NAME}
     PUBLIC
         ./include
+        ${CMAKE_BINARY_DIR}/proto
 #        ${CONAN_LIB_DIRS_PROTOBUF}
 #        ${CONAN_BIN_DIRS_PROTOBUF}
     PRIVATE
-        ${CMAKE_BINARY_DIR}/proto
+
 #        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 

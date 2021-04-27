@@ -3,8 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-//#include <protocol.h>
-#include "protocol/protocol.h"
+#include "protocol.h"
 
 
 TEST(CoreTest, ExampleTest1) {

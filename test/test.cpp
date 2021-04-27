@@ -3,7 +3,9 @@
 //
 
 #include "gtest/gtest.h"
-#include "protocol.h"
+//#include <protocol.h>
+#include "protocol/protocol.h"
+
 
 TEST(CoreTest, ExampleTest1) {
     ASSERT_TRUE(true);

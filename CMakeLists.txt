@@ -12,4 +12,8 @@ add_subdirectory(proto ${CMAKE_BINARY_DIR}/proto)
 # generate protocol library
 add_subdirectory(protocol)
 
+include(CTest)
+enable_testing()
+
+add_subdirectory(test)
 #install(TARGETS ${PROTOCOL_LIB_NAME} DESTINATION /usr/local/lib)

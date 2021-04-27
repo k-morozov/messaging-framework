@@ -16,3 +16,4 @@ Conan:
     - conan install -s build_type=Release .. --build=missing --profile goodok-profile
     - cmake ..
     - cmake --build .
+    - cmake --build . --target test

@@ -1,5 +1,6 @@
 [requires]
 gtest/1.10.0
+protobuf/3.15.5
 
 [generators]
 cmake

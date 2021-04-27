@@ -28,7 +28,7 @@ namespace command {
     constexpr uint32_t PROTOCOL_VERSION = 2;
     constexpr unsigned short SERVER_DEFAULT_PORT = 7777;
 
-    enum class TypeCommand : uint16_t {
+    enum class TypeCommand : int {
         Unknown = 0xFFFF,
         RegistrationRequest = 0x0001,
         RegistrationResponse = 0x0002,

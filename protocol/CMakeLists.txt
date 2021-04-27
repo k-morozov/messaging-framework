@@ -24,9 +24,7 @@ include_directories(
         ${CONAN_BIN_DIRS_PROTOBUF}
 )
 
-#message(${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(${PROTOCOL_LIB_NAME}
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}
-#            ${CMAKE_SOURCE_DIR}
 )

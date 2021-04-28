@@ -1,7 +1,7 @@
 #include "msgfactory.h"
 #include <iostream>
 
-#include <type_traits>
+#include <typecommand_traits.h>
 
 namespace goodok {
 
@@ -98,7 +98,7 @@ ptr_datetime_t MsgFactory::create_datetime(command::ClientTextMsg const& msg) {
 
 // Response
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Registration, int client_id) {
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::Registration, int client_id) {
     auto reg_response = std::make_unique<Serialize::RegResponse>();
 
     reg_response->set_client_id(client_id);
@@ -120,7 +120,7 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Registr
 }
 
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Authorisation, int client_id) {
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::Authorisation, int client_id) {
     auto in_response = std::make_unique<Serialize::InputResponse>();
 
     in_response->set_client_id(client_id);
@@ -141,7 +141,7 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Authori
 }
 
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Echo, const command::msg_text_t& msg) {
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::SendText, const command::msg_text_t& msg) {
     auto text_response = std::make_unique<Serialize::TextResponse>();
 
     text_response->set_login(msg.author);
@@ -158,7 +158,7 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Echo, c
 }
 
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::JoinRoom,
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::JoinRoom,
     const std::string& channel_name, bool flag) {
     
     auto jr_response = std::make_unique<Serialize::JoinRoomResponse>();
@@ -174,7 +174,7 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::JoinRoo
 }
 
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::History,
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::History,
     const std::string& channel_name, const std::deque<command::msg_text_t>& messages) {
         
     auto history_response = std::make_unique<Serialize::HistoryResponse>();
@@ -200,7 +200,7 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::History
 }
 
 [[nodiscard]]
-ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Channels,
+ptr_proto_response_t MsgFactory::create_response(TypeCommand::Tag::Channels,
     const std::deque<std::string>& channels) {
     
     auto ch_response = std::make_unique<Serialize::ChannelsResponse>();
@@ -217,35 +217,35 @@ ptr_proto_response_t MsgFactory::create_response(Traits::TypeCommandTag::Channel
 
 // Request
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::Registration,
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::Registration,
     const std::string& login, const std::string& password) {
 
-    auto in_request = std::make_unique<Serialize::RegRequest>();
+    auto in_request = std::make_unique<Serialize::RegistrationRequest>();
     in_request->set_login(login);
     in_request->set_password(password);
 
     auto request = std::make_unique<Serialize::Request>();
-    request->set_allocated_register_request(in_request.release());
+    request->set_allocated_registration_request(in_request.release());
 
     return request;
 }
 
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::Authorisation,
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::Authorisation,
     const std::string& login, const std::string& password) {
 
-    auto in_request = std::make_unique<Serialize::InRequest>();
+    auto in_request = std::make_unique<Serialize::AuthorisationRequest>();
     in_request->set_login(login);
     in_request->set_password(password);
 
     auto request = std::make_unique<Serialize::Request>();
-    request->set_allocated_input_request(in_request.release());
+    request->set_allocated_authorisation_request(in_request.release());
 
     return request;
 }
 
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::Echo, const command::msg_text_t& msg) {
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::SendText, const command::msg_text_t& msg) {
     auto text_request = std::make_unique<Serialize::TextRequest>();
     text_request->set_login(msg.author);
     text_request->set_channel_name(msg.channel_name);
@@ -260,7 +260,7 @@ ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::Echo, con
 }
 
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::JoinRoom,
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::JoinRoom,
     command::identifier_t client_id, const std::string& channel_name) {
 
     auto jr_request = std::make_unique<Serialize::JoinRoomRequest>();
@@ -274,9 +274,9 @@ ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::JoinRoom,
 }
 
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::History,
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::History,
                                                 command::identifier_t client_id,
-                                                const std::string& channel_name,
+                                                std::string const& channel_name,
                                                 DateTime since)
 {
     
@@ -301,7 +301,7 @@ ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::History,
 }
 
 [[nodiscard]]
-ptr_proto_request_t MsgFactory::create_request(Traits::TypeCommandTag::Channels, command::identifier_t client_id)
+ptr_proto_request_t MsgFactory::create_request(TypeCommand::Tag::Channels, command::identifier_t client_id)
 {
     auto ch_request = std::make_unique<Serialize::ChannelsRequest>();
     ch_request->set_client_id(client_id);

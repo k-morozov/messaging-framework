@@ -42,49 +42,49 @@ protected:
     
     // Response
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::Registration, int client_id);
+    static ptr_proto_response_t create_response(TypeCommand::Tag::Registration, int client_id);
     
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::Authorisation, int client_id);
+    static ptr_proto_response_t create_response(TypeCommand::Tag::Authorisation, int client_id);
     
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::Echo, const command::msg_text_t& msg);
+    static ptr_proto_response_t create_response(TypeCommand::Tag::SendText, const command::msg_text_t& msg);
     
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::JoinRoom,
+    static ptr_proto_response_t create_response(TypeCommand::Tag::JoinRoom,
         const std::string& channel_name, bool flag);
     
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::History,
+    static ptr_proto_response_t create_response(TypeCommand::Tag::History,
         const std::string& channel_name, const std::deque<command::msg_text_t>& messages);
 
     [[nodiscard]]
-    static ptr_proto_response_t create_response(Traits::TypeCommandTag::Channels,
+    static ptr_proto_response_t create_response(TypeCommand::Tag::Channels,
         const std::deque<std::string>& channels);
 
 
     // Request
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::Registration,
+    static ptr_proto_request_t create_request(TypeCommand::Tag::Registration,
         const std::string& login, const std::string& password);
 
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::Authorisation,
+    static ptr_proto_request_t create_request(TypeCommand::Tag::Authorisation,
         const std::string& login, const std::string& password);
 
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::Echo, const command::msg_text_t& msg);
+    static ptr_proto_request_t create_request(TypeCommand::Tag::SendText, const command::msg_text_t& msg);
 
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::JoinRoom,
+    static ptr_proto_request_t create_request(TypeCommand::Tag::JoinRoom,
         command::identifier_t client_id, const std::string& channel_name);
 
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::History,
+    static ptr_proto_request_t create_request(TypeCommand::Tag::History,
         command::identifier_t client_id, const std::string& channel_name, DateTime since);
 
     [[nodiscard]]
-    static ptr_proto_request_t create_request(Traits::TypeCommandTag::Channels, command::identifier_t client_id);
+    static ptr_proto_request_t create_request(TypeCommand::Tag::Channels, command::identifier_t client_id);
 };
 
 } // namespace goodok
@@ -99,7 +99,7 @@ inline std::ostream& operator<<(std::ostream& stream, const Serialize::Header ms
     return stream;
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const Serialize::InRequest msg) {
+inline std::ostream& operator<<(std::ostream& stream, const Serialize::AuthorisationRequest msg) {
     stream << "read InputRequest: " << msg.ByteSizeLong() << " bytes" << std::endl;
     stream << "login:"              << msg.login() << std::endl;
     stream << "password:"           << msg.password() << std::endl;
@@ -108,7 +108,7 @@ inline std::ostream& operator<<(std::ostream& stream, const Serialize::InRequest
 }
 
 inline std::ostream& operator<<(std::ostream& stream, const Serialize::Request msg) {
-    if (msg.has_input_request()) {
+    if (msg.has_authorisation_request()) {
         stream << msg;
     }
 
@@ -120,19 +120,19 @@ namespace goodok {
 template <command::TypeCommand To, class... Args>
 auto MsgFactory::serialize(Args&&... args) -> std::vector<uint8_t>
 {
-    using category = typename Traits::TypeCommandTraits<To>::Category;
-    using value = typename Traits::TypeCommandTraits<To>::Value;
-    using Unknown = Traits::TypeCommandTag::Unknown;
+    using category = typename TypeCommand::TypeCommandTraits<To>::Category;
+    using value = typename TypeCommand::TypeCommandTraits<To>::Value;
+    using Unknown = TypeCommand::Tag::Unknown;
 
     if constexpr (std::is_same_v<category, Unknown> || std::is_same_v<value, Unknown>)
     {
-        throw std::logic_error("Unable to define traits for TypeCommand::" + get_command_str(To));  
-    } else if constexpr (std::is_same_v<category, Traits::TypeCommandTag::Response>)
+        throw std::logic_error("Unable to define TypeCommand for TypeCommand::" + get_command_str(To));  
+    } else if constexpr (std::is_same_v<category, TypeCommand::Tag::Response>)
     {
         auto response = create_response(value{}, std::forward<Args>(args)...);
         auto header = create_header(To, response->ByteSizeLong());
         return serialize_response(std::move(header), std::move(response));
-    } else if constexpr (std::is_same_v<category, Traits::TypeCommandTag::Request>)
+    } else if constexpr (std::is_same_v<category, TypeCommand::Tag::Request>)
     {
         auto request = create_request(value{}, std::forward<Args>(args)...);
         auto header = create_header(To, request->ByteSizeLong());

@@ -6,9 +6,9 @@ include(${CONAN_LIB_DIRS_PROTOBUF}/cmake/protobuf/protobuf-generate.cmake)
 # GENERATE PROTOBUF FILES
 file(GLOB PROTOBUF_FILES "*.proto")
 
-find_package(Protobuf REQUIRED)
+#find_package(protobuf REQUIRED)
 protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTOBUF_FILES})
 
 add_library(generateProto STATIC ${PROTO_SRCS} ${PROTO_HDRS})
-target_include_directories(generateProto PUBLIC ${CMAKE_BINARY_DIR})
-#target_link_libraries(generateProto ${CONAN_LIB_DIRS_PROTOBUF})
+target_include_directories(generateProto PUBLIC ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+target_link_libraries(generateProto PUBLIC ${CONAN_LIBS_PROTOBUF})

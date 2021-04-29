@@ -7,7 +7,6 @@ add_executable(${APP_NAME} main.cpp testRequest.cpp)
 include_directories(${CONAN_INCLUDE_DIRS_GTEST})
 target_link_libraries(${APP_NAME}
         protocol_lib
-        generateProto
         ${CONAN_LIBS_GTEST}
 )
 

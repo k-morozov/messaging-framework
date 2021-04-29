@@ -15,13 +15,7 @@ file(GLOB PROTOBUF_FILES "proto/*.proto")
 file(GLOB FILES "protocol/*.h" "protocol/*.cpp")
 
 find_package(Protobuf REQUIRED)
-
-set(OLD_BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR})
-set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_BINARY_DIR}/proto)
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTOBUF_FILES})
-set(CMAKE_CURRENT_BINARY_DIR  ${OLD_BINARY_DIR})
-unset(OLD_BINARY_DIR)
-
+include(cmake/generate_proto.cmake)
 
 add_library(${PROTOCOL_LIB_NAME} STATIC ${FILES} ${PROTO_SRCS} ${PROTO_HDRS})
 

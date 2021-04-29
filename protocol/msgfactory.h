@@ -2,7 +2,7 @@
 #define MSGFACTORY_H
 
 #include "command_table.h"
-#include "proto/messages.pb.h"
+#include "messages.pb.h"
 #include "typecommand_traits.h"
 
 #include <deque>

@@ -22,6 +22,7 @@ protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTOBUF_FILES})
 set(CMAKE_CURRENT_BINARY_DIR  ${OLD_BINARY_DIR})
 unset(OLD_BINARY_DIR)
 
+
 add_library(${PROTOCOL_LIB_NAME} STATIC ${FILES} ${PROTO_SRCS} ${PROTO_HDRS})
 
 set_target_properties(${PROTOCOL_LIB_NAME} PROPERTIES
@@ -40,8 +41,6 @@ target_link_libraries(${PROTOCOL_LIB_NAME}
 include_directories(
         protocol
         ${CMAKE_BINARY_DIR}
-#        ${CONAN_LIB_DIRS_PROTOBUF}
-#        ${CONAN_BIN_DIRS_PROTOBUF}
 )
 
 target_include_directories(${PROTOCOL_LIB_NAME}

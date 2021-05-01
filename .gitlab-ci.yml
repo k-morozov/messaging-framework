@@ -3,7 +3,6 @@ variables:
   DEBIAN_FRONTEND: noninteractive
 stages:
   - build
-  - test
 cache:
   paths:
     - /root/.conan/
@@ -15,21 +14,15 @@ Build:
     - conan profile update settings.compiler.version=9.3 goodok-profile
     - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
     - conan install -s build_type=Release .. --build=missing --profile goodok-profile
-    - cd ..
   script:
-    - cd build
     - cmake ..
     - cmake --build . -- -j 4
-  artifacts:
-    paths:
-      - build/
-Test:
-  stage: test
-  script:
     - cmake --build . --target test
     - cmake --build . --target package
-  dependencies:
-    - Build:build
-#  artifacts:
-#    paths:
-#      - build/Messaging-framework-*.deb
+    - ./bin/ut_messaging --gtest_output="xml:report.xml"
+  artifacts:
+    when: always
+    paths:
+      - build/Messaging-framework-*.deb
+    reports:
+      junit: build/report.xml

@@ -1,4 +1,4 @@
-image: kstmorozov/protocol-env:latest
+image: registry.gitlab.com/goodok-chat/messaging-framework:latest
 variables:
   DEBIAN_FRONTEND: noninteractive
 stages:

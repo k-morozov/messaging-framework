@@ -23,5 +23,4 @@ Build:
     - cmake --build . --target package
   artifacts:
     paths:
-      - pwd
       - build/Messaging-framework-*.deb

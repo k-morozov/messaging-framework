@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Messaging-framework VERSION 0.1.2)
+project(Messaging-framework VERSION 0.1.3)
 set(PROTOCOL_LIB_NAME protocol_lib)
 
 # configure conan

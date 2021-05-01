@@ -28,6 +28,20 @@ namespace command {
     constexpr uint32_t PROTOCOL_VERSION = 2;
     constexpr unsigned short SERVER_DEFAULT_PORT = 7777;
 
+    namespace Block {
+        constexpr uint32_t VersionProtocol   = 2;
+        constexpr uint32_t Command           = 2;
+        constexpr uint32_t Datetime          = sizeof(DateTime);
+        constexpr uint32_t LoginName         = 16;
+        constexpr uint32_t Password          = 32;
+        constexpr uint32_t LoginId           = sizeof(identifier_t);
+        constexpr uint32_t RoomId            = sizeof(identifier_t);
+        constexpr uint32_t TextMessage       = 255;
+
+        constexpr uint32_t Header            = VersionProtocol + Command + Datetime;
+        constexpr uint32_t InputOption       = LoginName + Password;
+    }
+
     enum class TypeCommand : int {
         Unknown = 0xFFFF,
         RegistrationRequest = 0x0001,

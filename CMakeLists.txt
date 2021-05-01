@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(Messaging-framework VERSION 0.1.1)
+project(Messaging-framework VERSION 0.1.2)
 set(PROTOCOL_LIB_NAME protocol_lib)
 
 # configure conan
@@ -37,7 +37,6 @@ target_include_directories(${PROTOCOL_LIB_NAME}
         PUBLIC
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${CMAKE_BINARY_DIR}
-#            ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 include(CTest)
@@ -52,6 +51,8 @@ if (NOT WIN32)
     set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
     set(CPACK_PACKAGE_CONTACT morozov-kst@yandex.ru)
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+    # set(CPACK_DEBIAN_PACKAGE_DEPENDS "protobuf (>=3.15.5)")
+    # @TODO CPACK_DEBIAN_PACKAGE_DEPENDS not set, the package will have no dependencies.
     include(CPack)
 endif()
 
@@ -62,4 +63,3 @@ install(TARGETS ${PROTOCOL_LIB_NAME}
 file(GLOB HDRS "protocol/*.h")
 install(FILES ${HDRS} DESTINATION "/usr/local/include/goodok/protocol" COMPONENT devel)
 install(FILES ${PROTO_HDRS} DESTINATION "/usr/local/include/goodok/protocol/proto" COMPONENT devel)
-#@TODO CPACK_DEBIAN_PACKAGE_DEPENDS not set, the package will have no dependencies.

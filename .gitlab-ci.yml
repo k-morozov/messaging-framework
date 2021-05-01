@@ -15,6 +15,6 @@ Build:
   script:
     - cd build
     - cmake ..
-    - cmake --build .
+    - cmake --build . -- -j 4
     - cmake --build . --target test
     - cmake --build . --target package

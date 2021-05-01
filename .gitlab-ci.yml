@@ -4,7 +4,6 @@ variables:
 stages:
   - build
   - test
-  - package
 cache:
   paths:
     - /root/.conan/
@@ -24,9 +23,6 @@ Build:
   artifacts:
     paths:
       - build/
-#    - cmake --build . --target test
-#    - cmake --build . --target package
-
 Test:
   stage: test
   script:

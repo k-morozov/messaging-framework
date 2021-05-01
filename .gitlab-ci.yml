@@ -1,20 +1,30 @@
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/#customizing-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#priority-of-environment-variables
 image: registry.gitlab.com/goodok-chat/messaging-framework:latest
 variables:
   DEBIAN_FRONTEND: noninteractive
 stages:
-  - build
+- build
+- test
 Build:
   stage: build
   before_script:
-    - mkdir build && cd build && mkdir -p proto
-    - conan profile new goodok-profile --detect
-    - conan profile update settings.compiler.version=9.3 goodok-profile
-    - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
-    - conan install -s build_type=Release .. --build=missing --profile goodok-profile
-    - cd ..
+  - mkdir build && cd build && mkdir -p proto
+  - conan profile new goodok-profile --detect
+  - conan profile update settings.compiler.version=9.3 goodok-profile
+  - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
+  - conan install -s build_type=Release .. --build=missing --profile goodok-profile
+  - cd ..
   script:
-    - cd build
-    - cmake ..
-    - cmake --build .
-    - cmake --build . --target test
-    - cmake --build . --target package
+  - cd build
+  - cmake ..
+  - cmake --build .
+  - cmake --build . --target test
+  - cmake --build . --target package
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml

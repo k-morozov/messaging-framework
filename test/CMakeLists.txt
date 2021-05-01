@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(APP_NAME ut_messaging)
-set(CONAN_DISABLE_CHECK_COMPILER ON)
-
+set(CONAN_DISABLE_CHECK_COMPILER TRUE)
+conan_check_compiler()
 add_executable(${APP_NAME} main.cpp testRequest.cpp)
 
 include_directories(${CONAN_INCLUDE_DIRS_GTEST})

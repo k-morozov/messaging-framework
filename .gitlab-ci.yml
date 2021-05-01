@@ -29,7 +29,7 @@ Test:
     - cmake --build . --target test
     - cmake --build . --target package
   dependencies:
-    - build
+    - Build:build
 #  artifacts:
 #    paths:
 #      - build/Messaging-framework-*.deb

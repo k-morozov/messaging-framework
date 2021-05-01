@@ -62,3 +62,4 @@ install(TARGETS ${PROTOCOL_LIB_NAME}
 file(GLOB HDRS "protocol/*.h")
 install(FILES ${HDRS} DESTINATION "/usr/local/include/goodok/protocol" COMPONENT devel)
 install(FILES ${PROTO_HDRS} DESTINATION "/usr/local/include/goodok/protocol/proto" COMPONENT devel)
+#@TODO CPACK_DEBIAN_PACKAGE_DEPENDS not set, the package will have no dependencies.

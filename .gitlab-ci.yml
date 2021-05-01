@@ -3,9 +3,11 @@ variables:
   DEBIAN_FRONTEND: noninteractive
 stages:
   - build
+  - test
+  - package
 cache:
   paths:
-    - ~/.conan
+    - /root/.conan/
 Build:
   stage: build
   before_script:
@@ -19,8 +21,20 @@ Build:
     - cd build
     - cmake ..
     - cmake --build . -- -j 4
+  artifacts:
+    paths:
+      - build/
+#    - cmake --build . --target test
+#    - cmake --build . --target package
+
+Test:
+  stage: test
+  script:
     - cmake --build . --target test
     - cmake --build . --target package
+  dependencies:
+    - build
+    - cmake --build . --target test
   artifacts:
     paths:
       - build/Messaging-framework-*.deb

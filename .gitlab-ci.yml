@@ -3,6 +3,9 @@ variables:
   DEBIAN_FRONTEND: noninteractive
 stages:
   - build
+cache:
+  paths:
+    - ~/.conan
 Build:
   stage: build
   before_script:
@@ -21,4 +24,4 @@ Build:
   artifacts:
     paths:
       - pwd
-      - build/Messaging-framework-0.1.3-Linux.deb
+      - build/Messaging-framework-*.deb

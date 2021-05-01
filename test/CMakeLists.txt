@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(APP_NAME ut_messaging)
-set(CONAN_DISABLE_CHECK_COMPILER)
+set(CONAN_DISABLE_CHECK_COMPILER ON)
 
 add_executable(${APP_NAME} main.cpp testRequest.cpp)
 

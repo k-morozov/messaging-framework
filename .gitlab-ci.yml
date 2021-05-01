@@ -3,24 +3,17 @@ variables:
   DEBIAN_FRONTEND: noninteractive
 stages:
   - build
-Conan:
+Build:
   stage: build
   before_script:
-#    - apt-get update
-#    - apt-get install -y python3-pip cmake
-#    - pip3 install conan
-#    - source ~/.profile
     - mkdir build && cd build && mkdir -p proto
     - conan profile new goodok-profile --detect
     - conan profile update settings.compiler.version=9.3 goodok-profile
     - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
     - conan install -s build_type=Release .. --build=missing --profile goodok-profile
+    - cd ..
   script:
-#    - mkdir build && cd build && mkdir -p proto
-#    - conan profile new goodok-profile --detect
-#    - conan profile update settings.compiler.version=9.3 goodok-profile
-#    - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
-#    - conan install -s build_type=Release .. --build=missing --profile goodok-profile
+    - cd build
     - cmake ..
     - cmake --build .
     - cmake --build . --target test

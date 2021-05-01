@@ -13,7 +13,7 @@ Conan:
   script:
     - mkdir build && cd build && mkdir -p proto
     - conan profile new goodok-profile --detect
-    - conan profile update settings.compiler.version=7 goodok-profile
+    - conan profile update settings.compiler.version=9.3 goodok-profile
     - conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
     - conan install -s build_type=Release .. --build=missing --profile goodok-profile
     - cmake ..

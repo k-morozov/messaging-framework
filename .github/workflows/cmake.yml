@@ -21,7 +21,7 @@ jobs:
       image: kstmorozov/protocol-env@latest
     steps:
     - uses: actions/checkout@v2
-    - uses: docker::/kstmorozov/protocol-env@latest
+    - uses: kstmorozov/protocol-env@latest
 
     - name: conan
       run: mkdir build && cd build && mkdir -p proto && \

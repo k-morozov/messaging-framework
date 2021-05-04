@@ -25,12 +25,6 @@ jobs:
         conan profile update settings.compiler.version=9.3 goodok-profile
         conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
 
-        
-    - name: conan-install
-      run: |
-        mkdir -p ${{github.workspace}}/build && mkdir -p ${{github.workspace}}/build/proto
-        conan install -s build_type=${{env.BUILD_TYPE}} . --build=missing --profile goodok-profile -if ${{github.workspace}}/build
-
     - name: Cache
       uses: actions/cache@v2.1.5
       with:
@@ -39,6 +33,11 @@ jobs:
         # An explicit key for restoring and saving the cache
         key: ${{ runner.os }}-cmake-${{ hashFiles('**/conanfile.txt') }}
         restore-keys: ${{ runner.os }}-cmake
+        
+    - name: conan-install
+      run: |
+        mkdir -p ${{github.workspace}}/build && mkdir -p ${{github.workspace}}/build/proto
+        conan install -s build_type=${{env.BUILD_TYPE}} . --build=missing --profile goodok-profile -if ${{github.workspace}}/build
     
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -64,22 +63,22 @@ jobs:
       # run: ctest -C ${{env.BUILD_TYPE}}
       run: cmake --build ${{github.workspace}}/build --target package
       
-    - name: Release Creator
-      # You may pin to the exact commit or the version.
-      # uses: alice-biometrics/release-creator@776aae43916758e40fc9420eb85f5659994f4a3e
-      uses: alice-biometrics/release-creator@v1.0.4
-      with:
-        # GitHub token
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # New release version
-        version: 0.0.1
-        # New release description
-        description: nope
-        # Git repository where the release will be create
-        # Git repository branch where the release will be create
-        branch: master
-        # Define if new release is a draft or not
-        draft: true
-        # Define if new release is a prerelease or not
-        prerelease: true
+#     - name: Deploy
+#       # You may pin to the exact commit or the version.
+#       # uses: alice-biometrics/release-creator@776aae43916758e40fc9420eb85f5659994f4a3e
+#       uses: alice-biometrics/release-creator@v1.0.4
+#       with:
+#         # GitHub token
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         # New release version
+#         version: 0.0.1
+#         # New release description
+#         description: nope
+#         # Git repository where the release will be create
+#         # Git repository branch where the release will be create
+#         branch: master
+#         # Define if new release is a draft or not
+#         draft: true
+#         # Define if new release is a prerelease or not
+#         prerelease: true
   

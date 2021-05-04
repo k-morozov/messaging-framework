@@ -30,6 +30,15 @@ jobs:
       run: |
         mkdir -p ${{github.workspace}}/build && mkdir -p ${{github.workspace}}/build/proto
         conan install -s build_type=${{env.BUILD_TYPE}} . --build=missing --profile goodok-profile -if ${{github.workspace}}/build
+        
+    - name: Cache
+      uses: actions/cache@v2.1.5
+      with:
+        # A list of files, directories, and wildcard patterns to cache and restore
+        path: /github/home/.conan
+        # An explicit key for restoring and saving the cache
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-maven
           
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.

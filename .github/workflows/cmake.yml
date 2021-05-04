@@ -63,4 +63,23 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       # run: ctest -C ${{env.BUILD_TYPE}}
       run: cmake --build ${{github.workspace}}/build --target package
+      
+    - name: Release Creator
+      # You may pin to the exact commit or the version.
+      # uses: alice-biometrics/release-creator@776aae43916758e40fc9420eb85f5659994f4a3e
+      uses: alice-biometrics/release-creator@v1.0.4
+      with:
+        # GitHub token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # New release version
+        version: 0.0.1
+        # New release description
+        description: nope
+        # Git repository where the release will be create
+        # Git repository branch where the release will be create
+        branch: master
+        # Define if new release is a draft or not
+        draft: true
+        # Define if new release is a prerelease or not
+        prerelease: true
   

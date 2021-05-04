@@ -28,7 +28,7 @@ jobs:
     - name: conan-install
       run: |
         mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build && mkdir -p proto
-        conan install -s build_type=Release .. --build=missing --profile goodok-profile
+        conan install -s build_type=Release . --build=missing --profile goodok-profile -if ${{github.workspace}}/build
         cd ..
           
     - name: Configure CMake

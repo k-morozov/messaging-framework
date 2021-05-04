@@ -19,11 +19,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#     - name: conan-profile
-#       run: |
-#         conan profile new goodok-profile --detect
-#         conan profile update settings.compiler.version=9.3 goodok-profile
-#         conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
+    - name: conan-profile
+      run: |
+        conan profile new goodok-profile --detect
+        conan profile update settings.compiler.version=9.3 goodok-profile
+        conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
+
         
     - name: conan-install
       run: |

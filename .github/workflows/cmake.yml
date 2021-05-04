@@ -19,8 +19,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: conan
-      run: conan profile new goodok-profile --detect
+    - name: conan-profile
+      run: |
+        conan profile new goodok-profile --detect
+        conan profile update settings.compiler.version=9.3 goodok-profile
+        conan profile update settings.compiler.libcxx=libstdc++11 goodok-profile
+        
+    - name: conan-install
+      run: |
+        mkdir ${{github.workspace}}/build && cd ${{github.workspace}}/build && mkdir -p proto
+        conan install -s build_type=Release .. --build=missing --profile goodok-profile
+        cd ..
           
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.

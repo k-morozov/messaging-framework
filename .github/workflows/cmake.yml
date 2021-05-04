@@ -18,10 +18,12 @@ jobs:
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
     container:
-      image: kstmorozov/protocol-env@latest
+      image: kstmorozov/protocol-env:latest
     steps:
-    - uses: actions/checkout@v2
+    # - uses: actions/checkout@v2
 
+    - uses: kstmorozov/protocol-env@latest
+    
     - name: conan
       run: mkdir build && cd build && mkdir -p proto && \
             conan profile new goodok-profile --detect && \

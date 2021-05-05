@@ -58,7 +58,15 @@ jobs:
       
     - name: Package
       run: cmake --build ${{github.workspace}}/build --target package
-      
+    - run: echo hi > world.txt
+    - uses: actions/upload-artifact@v2
+      with:
+        path: world.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        path: ${{github.workspace}}/build/Messaging-framework-0.1.3-Linux.deb
+
 #     - name: Deploy
 #       # You may pin to the exact commit or the version.
 #       # uses: alice-biometrics/release-creator@776aae43916758e40fc9420eb85f5659994f4a3e

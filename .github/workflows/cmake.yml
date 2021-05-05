@@ -87,7 +87,7 @@ jobs:
 #      - name: Build
 #        run: |
 #          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-      - name: package
+      - name: pack_age
         run: cmake --build ${{github.workspace}}/build --target package
       uses: actions/upload-artifact@v2.2.3
           with:

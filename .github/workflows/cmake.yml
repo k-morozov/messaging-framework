@@ -53,7 +53,10 @@ jobs:
       run: ctest -C ${{env.BUILD_TYPE}}
 
     - name: Package
-      run: cmake --build ${{github.workspace}}/build --target package
+      run: |
+        cmake --build ${{github.workspace}}/build --target package
+        echo ${{github.workspace}}
+        echo '/home/runner/work/messaging-framework/messaging-framework/'
 
     - uses: actions/upload-artifact@v2.2.3
       with:

@@ -57,11 +57,9 @@ jobs:
         # cmake --build ${{github.workspace}}/build --target test
       
     - name: Package
-      run: cmake --build ${{github.workspace}}/build --target package
-    - run: echo hi > world.txt
-    - uses: actions/upload-artifact@v2
-      with:
-        path: world.txt
+      run: |
+        cmake --build ${{github.workspace}}/build --target package
+        ll ${{github.workspace}}/build
 
     - uses: actions/upload-artifact@v2
       with:

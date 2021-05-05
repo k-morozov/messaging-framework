@@ -57,6 +57,7 @@ jobs:
       ls ~
 
     - uses: actions/upload-artifact@v2.2.3
+      run: ls ~
       with:
         name: Messaging-framework-0.1.3-Linux.deb
         path: ${{github.workspace}}/build/**/*

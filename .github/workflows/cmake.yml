@@ -59,9 +59,9 @@ jobs:
         echo '/home/runner/work/messaging-framework/messaging-framework'
 
     - name: Test_zx
-      run: ls ${{github.workspace}}
+      run: ls ${{github.workspace}}/build
 
     - uses: actions/upload-artifact@v2.2.3
       with:
         name: Messaging-framework-0.1.3-Linux.deb
-        path: '${{github.workspace}}/build/Messaging-framework-0.1.3-Linux.deb'
+        path: ${{github.workspace}}/build/Messaging-framework-0.1.3-Linux.deb

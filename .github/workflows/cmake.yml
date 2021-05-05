@@ -52,11 +52,8 @@ jobs:
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
         ctest -C ${{env.BUILD_TYPE}}
-      
-    - name: Package
-      run: |
-        cmake --build ${{github.workspace}}/build --target package
-        ls ${{github.workspace}}/build
+
+    - run: cmake --build ${{github.workspace}}/build --target package
 
 #    - name: Upload
       uses: actions/upload-artifact@v2.2.3

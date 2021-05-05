@@ -56,9 +56,9 @@ jobs:
       run: |
         cmake --build ${{github.workspace}}/build --target package
         echo ${{github.workspace}}
-        echo '/home/runner/work/messaging-framework/messaging-framework/'
+        echo '/home/runner/work/messaging-framework/messaging-framework'
 
     - uses: actions/upload-artifact@v2.2.3
       with:
         name: Messaging-framework-0.1.3-Linux.deb
-        path: '/home/runner/work/messaging-framework/messaging-framework/build/*'
+        path: '${{github.workspace}}/build/Messaging-framework-0.1.3-Linux.deb'

@@ -8,6 +8,7 @@ on:
 
 env:
   BUILD_TYPE: Release
+  name: my-artifact
 
 jobs:
   build_release:
@@ -53,13 +54,19 @@ jobs:
         cmake --build ${{github.workspace}}/build --target package
         echo ${{github.workspace}}
         echo '/home/runner/work/messaging-framework/messaging-framework'
-        echo '${`}'
 
-    - name: Test_dir
-      run: ls ${{github.workspace}}/build
-
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.3
+#    - name: Test_dir
+#      run: ls ${{github.workspace}}/build
+#
+#    - name: Upload a Build Artifact
+#      uses: actions/upload-artifact@v2.2.3
+#      with:
+#        name: Messaging-framework-0.1.3-Linux.deb
+#        path: ${{github.workspace}}/build/
+    - run: |
+        mkdir -p ${{ github.workspace }}/artifact
+        echo hello > ${{ github.workspace }}/artifact/world.txt
+    - uses: actions/upload-artifact@v2
       with:
-        name: Messaging-framework-0.1.3-Linux.deb
-        path: ${{github.workspace}}/build/
+        name: ${{ env.name }}-name
+        path: ${{ github.workspace }}/artifact/**/*

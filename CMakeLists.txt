@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Messaging-framework VERSION 0.1.3)
 set(PROTOCOL_LIB_NAME protocol_lib)
 
+set(CONAN_DISABLE_CHECK_COMPILER TRUE)
 # configure conan
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()

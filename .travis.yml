@@ -8,12 +8,12 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-7
+            - g++-9
             - graphviz
             - doxygen
             - python-pip
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - MATRIX_EVAL="CXX=g++-9"
         - BUILD_DIR=build
         - APP_NAME=protocol
       before_install:

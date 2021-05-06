@@ -21,6 +21,7 @@ matrix:
       before_script:
         - pip install conan
         - source ~/.profile
+
       script:
         - mkdir -p ${BUILD_DIR}  && cd ${BUILD_DIR} && mkdir -p proto
         - conan profile new goodok-profile --detect
